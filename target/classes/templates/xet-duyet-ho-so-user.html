@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Quản lý tuyển sinh</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link th:href="@{/assets/img/favicon.png}" rel="icon" />
+    <link
+      th:href="@{/assets/img/apple-touch-icon.png}"
+      rel="apple-touch-icon"
+    />
+
+    <!-- Google Fonts -->
+    <link th:href="@{https://fonts.gstatic.com}" rel="preconnect" />
+    <link
+      th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i}"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}"
+      rel="stylesheet"
+    />
+    <link
+      th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}"
+      rel="stylesheet"
+    />
+    <link
+      th:href="@{/assets/vendor/boxicons/css/boxicons.min.css}"
+      rel="stylesheet"
+    />
+    <link
+      th:href="@{/assets/vendor/remixicon/remixicon.css}"
+      rel="stylesheet"
+    />
+
+    <!-- Template Main CSS File -->
+    <link th:href="@{/assets/css/style.css}" rel="stylesheet" />
+
+    <!-- Ckeditor -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
+    <!-- Date picker -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  
+    <link th:href="@{/assets/css/datepicker.css}" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <a th:href="@{/user/trang-chu}" class="logo d-flex align-items-center">
+          <img th:src="@{/assets/img/logo.png}" alt="" />
+          <span class="d-none d-lg-block">NiceAdmin</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+      </div>
+      <!-- End Logo -->
+
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+          <li class="nav-item dropdown pe-3">
+            <a
+              class="nav-link nav-profile d-flex align-items-center pe-0"
+              href="#"
+              data-bs-toggle="dropdown"
+            >
+              <img
+                th:src="@{/assets/img/profile-img.jpg}"
+                alt="Profile"
+                class="rounded-circle"
+              />
+              <span
+                class="d-none d-md-block dropdown-toggle ps-2"
+                th:text="${user.lastName}"
+                >Toyama Kasumi</span
+              > </a
+            ><!-- End Profile Image Icon -->
+
+            <ul
+              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
+            >
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  th:href="@{/user/cai-dat-tai-khoan-ca-nhan}"
+                >
+                  <i class="bi bi-gear"></i>
+                  <span>Cài đặt tài khoản</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" th:href="@{/logout}">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Đăng xuất</span>
+                </a>
+              </li>
+            </ul>
+            <!-- End Profile Dropdown Items -->
+          </li>
+          <!-- End Profile Nav -->
+        </ul>
+      </nav>
+      <!-- End Icons Navigation -->
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" th:href="@{/user/trang-chu}">
+            <i class="bi bi-grid"></i>
+            <span>Trang chủ</span>
+          </a>
+        </li>
+        <!--Muốn tab có hiệu ứng thì bỏ collapsed -->
+
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/user/quan-ly-ho-so-tuyen-sinh}">
+            <i class="bi bi-journal-text"></i>
+            <span>Quản lý hồ sơ tuyển sinh</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            th:href="@{/user/quan-ly-thong-tin-truong}"
+          >
+            <i class="bi bi-card-list"></i>
+            <span>Quản lý thông tin trường</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" th:href="@{/user/quan-ly-tuyen-sinh}">
+            <i class="bi bi-menu-button-wide"></i>
+            <span>Quản lý tuyển sinh</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" th:href="@{/user/quan-ly-tai-khoan}">
+            <i class="bi bi-person"></i>
+            <span>Quản lý tài khoản</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <!-- End Sidebar-->
+
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>Xét duyệt hồ sơ</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/user/trang-chu}">Trang chủ</a></li>
+            <li class="breadcrumb-item">
+              <a th:href="@{/user/quan-ly-ho-so-tuyen-sinh}">Quản lý hồ sơ tuyển sinh</a>
+            </li>
+            <li class="breadcrumb-item">Xét duyệt hồ sơ</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- End Page Title -->
+      <!-- Nơi hiển thị thông báo lỗi -->
+      <div th:if="${param.success != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        <span th:text="${param.success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <div th:if="${param.error != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-octagon me-1"></i>
+        <span th:text="${param.error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <!-- Kết thúc nơi hiển thị nơi thông báo lỗi -->
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <!-- Bat dau van ban can them -->
+                <h5 class="card-title">Danh sách hồ sơ tuyển sinh</h5>
+                <!-- Noi can them form -->
+                <form
+                  th:object="${admission}"
+                  th:action="@{/user/xet-duyet-ho-so}"
+                  method="post"
+                >
+                  <input type="hidden" th:field="*{id}" />
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label for="fullName">Họ và tên</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="fullName"
+                        th:field="*{fullName}"
+                        required
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="gender">Giới tính</label>
+                      <select
+                        id="gender"
+                        class="form-control"
+                        th:field="*{gender}"
+                        required
+                      >
+                        <option
+                          th:each="gender : ${genders}"
+                          th:value="${gender}"
+                          th:text="${gender.getDisplayName()}"
+                          th:selected="${gender.getDisplayName() == admission.gender}"
+                        ></option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="dateOfBirth">Ngày sinh</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="datepicker"
+                        th:field="*{dateOfBirth}"
+                        required
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="placeOfBirth">Nơi sinh</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="placeOfBirth"
+                        th:field="*{placeOfBirth}"
+                        required
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="address">Địa chỉ</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="address"
+                        th:field="*{address}"
+                        required
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="ethnicity">Dân tộc</label>
+                      <select
+                        id="ethnicity"
+                        class="form-control"
+                        th:field="*{ethnicity}"
+                        required
+                      >
+                        <option
+                          th:each="ethnicity : ${ethnicities}"
+                          th:value="${ethnicity}"
+                          th:text="${ethnicity}"
+                          th:selected="${ethnicity == admission.ethnicity}"
+                        ></option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="personalId">Số CMND</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="personalId"
+                        th:field="*{personalId}"
+                        required
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="schoolName">Trường học</label>
+                      <select 
+                        id="schoolName"
+                        class="form-control"
+                        th:field="*{schoolName}"
+                        required
+                      >
+                        <option value="">-- Chọn Trường --</option>
+                        <option
+                          th:each="school : ${schools}"
+                          th:value="${school.schoolName}"
+                          th:text="${school.schoolName}"
+                          th:selected="${school.schoolName == admission.schoolName}"
+                        ></option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="admissionDate">Thời gian nộp đơn</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="admissionDate"
+                        th:field="*{admissionDate}"
+                        readonly
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="status">Trạng thái</label>
+                      <select
+                        id="status"
+                        class="form-control"
+                        th:field="*{status}"
+                        required
+                      >
+                        <option
+                          th:each="status : ${admissionStatuses}"
+                          th:value="${status.getDisplayName()}"
+                          th:text="${status.getDisplayName()}"
+                          th:selected="${status.getDisplayName() == admission.status}"
+                        ></option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label for="note">Ghi chú</label>
+                      <textarea
+                        id="editor"
+                        class="form-control"
+                        th:field="*{note}"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Lưu</button>
+                </form>
+
+                <!-- ket thuc van ban can them -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Toyama Kasumi</span></strong
+        >. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-user-bootstrap-user-html-template/ -->
+        Designed by <a href="https://bootstrapmade.com/">Kas</a>
+      </div>
+    </footer>
+    <!-- End Footer -->
+
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Vendor JS Files -->
+    <script
+      th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"
+    ></script>
+    <script th:src="@{/assets/vendor/tinymce/tinymce.min.js}"></script>
+    <!-- Template Main JS File -->
+    <script th:src="@{/assets/js/main.js}"></script>
+    <!-- CKeditor -->
+    <script>
+      ClassicEditor.create(document.querySelector("#editor")).catch((error) => {
+        console.error(error);
+      });
+    </script>
+
+    <!--  -->
+    <script>
+      $(document).ready(function() {
+        // Initialize date picker with custom date format
+        $("#datepicker").datepicker({
+          dateFormat: "dd/mm/yy",
+          changeYear: true,
+          changeMonth: true,
+          yearRange: "1900:2023"
+        });
+      });
+    </script>
+
+  </body>
+</html>

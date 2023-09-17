@@ -1,0 +1,8 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "cSpell.words": [
+        "Khác"
+    ],
+    "liveServer.settings.port": 5501,
+    "java.configuration.updateBuildConfiguration": "interactive"
+}
